@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SmartStay AI</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="admin-page">
+
+<header class="navbar">
+    <a class="brand" href="/">SmartStay <span>AI</span> Admin</a>
+    <a href="/admin/logout">Logout</a>
+</header>
+
+<main class="admin-main">
+
+    <div class="section-heading">
+        <p class="eyebrow">STAGE 4 - ADMIN PANEL</p>
+        <h1>Hotel Dashboard</h1>
+        <p>Manage hotel rooms, bookings and guest requests.</p>
+    </div>
+
+    <div class="stats-grid">
+
+        <article class="stat-card">
+            <span>Active Rooms</span>
+            <strong>{{ stats.rooms }}</strong>
+        </article>
+
+        <article class="stat-card">
+            <span>Total Bookings</span>
+            <strong>{{ stats.bookings }}</strong>
+        </article>
+
+        <article class="stat-card">
+            <span>Confirmed Bookings</span>
+            <strong>{{ stats.confirmed }}</strong>
+        </article>
+
+        <article class="stat-card">
+            <span>Pending Requests</span>
+            <strong>{{ stats.requests }}</strong>
+        </article>
+
+    </div>
+
+    <section class="admin-section">
+        <h2>Recent Bookings</h2>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Guest Name</th>
+                        <th>Room</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for b in bookings %}
+                    <tr>
+                        <td>{{ b.booking_ref }}</td>
+                        <td>{{ b.guest_name }}</td>
+                        <td>{{ b.room_name }}</td>
+                        <td>{{ b.check_in }}</td>
+                        <td>{{ b.check_out }}</td>
+                        <td>₹{{ "%.0f"|format(b.total_amount) }}</td>
+                        <td>{{ b.status }}</td>
+
+                        <td>
+                            {% if b.status == 'Confirmed' %}
+                            <form method="POST"
+                                  action="/admin/booking/{{ b.id }}/cancel">
+                                <button type="submit">
+                                    Cancel
+                                </button>
+                            </form>
+                            {% else %}
+                            -
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="8">No bookings available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="admin-section">
+        <h2>Guest Service Requests</h2>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Guest</th>
+                        <th>Room</th>
+                        <th>Request</th>
+                        <th>Details</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for r in requests %}
+                    <tr>
+                        <td>{{ r.id }}</td>
+                        <td>{{ r.guest_name }}</td>
+                        <td>{{ r.room_number }}</td>
+                        <td>{{ r.request_type }}</td>
+                        <td>{{ r.details }}</td>
+                        <td>{{ r.status }}</td>
+
+                        <td>
+                            {% if r.status == 'Pending' %}
+                            <form method="POST"
+                                  action="/admin/service/{{ r.id }}/complete">
+                                <button type="submit">
+                                    Complete
+                                </button>
+                            </form>
+                            {% else %}
+                            Completed
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    {% else %}
+                    <tr>
+                        <td colspan="7">No requests available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</main>
+</body>
+</html>

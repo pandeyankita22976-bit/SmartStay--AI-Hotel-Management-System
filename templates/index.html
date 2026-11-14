@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SmartStay AI Hotel Management System">
+    <title>SmartStay AI | Hotel Management</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <script src="{{ url_for('static', filename='script.js', v='chatfix1') }}" defer></script>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="/" class="brand">SmartStay <span>AI</span></a>
+
+    <nav>
+        <a href="#home" data-en="Home" data-hi="होम">Home</a>
+        <a href="#rooms" data-en="Rooms" data-hi="कमरे">Rooms</a>
+        <a href="#booking" data-en="Booking" data-hi="बुकिंग">Booking</a>
+        <a href="#assistant" data-en="AI Assistant" data-hi="AI सहायक">AI Assistant</a>
+        <a href="#service" data-en="Services" data-hi="सेवाएँ">Services</a>
+        <a href="/admin/login">Admin</a>
+    </nav>
+
+    <button id="languageButton" type="button">हिन्दी</button>
+</header>
+
+<main>
+
+<!-- STAGE 1: HOME PAGE -->
+
+<section id="home" class="hero">
+    <div class="hero-content">
+        <p class="eyebrow">WELCOME TO SMARTSTAY AI</p>
+
+        <h1 data-en="Your stay, made smarter."
+            data-hi="आपका ठहराव, अब और भी स्मार्ट।">
+            Your stay, made smarter.
+        </h1>
+
+        <p data-en="Find comfortable rooms and enjoy smart hotel services."
+           data-hi="आरामदायक कमरे खोजें और स्मार्ट होटल सेवाओं का आनंद लें।">
+            Find comfortable rooms and enjoy smart hotel services.
+        </p>
+
+        <a href="#rooms" class="primary-button"
+           data-en="Explore Rooms" data-hi="कमरे देखें">
+            Explore Rooms
+        </a>
+    </div>
+</section>
+
+<section class="features">
+    <article class="feature-card">
+        <h3>Smart Assistance</h3>
+        <p>Get quick answers from our hotel assistant.</p>
+    </article>
+
+    <article class="feature-card">
+        <h3>Easy Booking</h3>
+        <p>Book rooms with a simple booking form.</p>
+    </article>
+
+    <article class="feature-card">
+        <h3>Two Languages</h3>
+        <p>Use the website in Hindi or English.</p>
+    </article>
+</section>
+
+<!-- ROOM SEARCH -->
+
+<section id="rooms" class="section">
+    <div class="section-heading">
+        <p class="eyebrow">STAGE 1</p>
+        <h2>Explore Our Rooms</h2>
+        <p>Find a room according to your budget and dates.</p>
+    </div>
+
+    <form id="roomSearch" class="search-bar">
+
+        <div>
+            <label for="budget">Maximum Budget (₹)</label>
+            <input type="number" id="budget"
+                   min="0" placeholder="2500">
+        </div>
+
+        <div>
+            <label for="searchCheckIn">Check-in</label>
+            <input type="date" id="searchCheckIn">
+        </div>
+
+        <div>
+            <label for="searchCheckOut">Check-out</label>
+            <input type="date" id="searchCheckOut">
+        </div>
+
+        <button type="submit" class="primary-button">
+            Find Rooms
+        </button>
+
+    </form>
+
+    <p id="roomStatus" class="status-message"></p>
+
+    <div id="roomList" class="room-grid"></div>
+</section>
+
+<!-- STAGE 3: BOOKING -->
+
+<section id="booking" class="section booking-section">
+
+    <div class="section-heading">
+        <p class="eyebrow">STAGE 3</p>
+        <h2>Book Your Room</h2>
+        <p>Enter your details to create a room booking.</p>
+    </div>
+
+    <form id="bookingForm" class="main-form">
+
+        <label for="guestName">Full Name</label>
+        <input id="guestName" name="guest_name"
+               type="text" required maxlength="100">
+
+        <label for="email">Email Address</label>
+        <input id="email" name="email"
+               type="email" required maxlength="150">
+
+        <label for="phone">Phone Number</label>
+        <input id="phone" name="phone"
+               type="tel" required maxlength="20">
+
+        <label for="roomId">Select Room</label>
+        <select id="roomId" name="room_id" required>
+            <option value="">First load available rooms</option>
+        </select>
+
+        <label for="checkIn">Check-in Date</label>
+        <input type="date" id="checkIn"
+               name="check_in" required>
+
+        <label for="checkOut">Check-out Date</label>
+        <input type="date" id="checkOut"
+               name="check_out" required>
+
+        <label for="guests">Number of Guests</label>
+        <input type="number" id="guests"
+               name="guests" min="1" max="10" value="1" required>
+
+        <button type="submit" class="primary-button">
+            Confirm Booking
+        </button>
+
+        <p id="bookingStatus" class="status-message"
+           aria-live="polite"></p>
+
+    </form>
+</section>
+
+<!-- STAGE 2: AI CHATBOT -->
+
+<section id="assistant" class="section assistant-section">
+
+    <div class="section-heading">
+        <p class="eyebrow">STAGE 2</p>
+        <h2>SmartStay AI Assistant</h2>
+        <p>Ask questions about rooms, prices and facilities.</p>
+    </div>
+
+    <div class="chat-panel">
+
+        <div class="chat-header">
+            <div class="bot-avatar">S</div>
+
+            <div>
+                <strong>SmartStay AI</strong>
+                <p>Hotel Information Assistant</p>
+            </div>
+
+            <span class="online-dot"></span>
+        </div>
+
+        <div id="chatMessages" class="chat-messages"
+             role="log" aria-live="polite">
+
+            <div class="message bot-message">
+                Hello! Welcome to SmartStay AI.
+                How can I help you?
+            </div>
+
+        </div>
+
+        <div class="quick-questions">
+            <button type="button" class="quick-question"
+                    data-question="Show available rooms">
+                Available Rooms
+            </button>
+
+            <button type="button" class="quick-question"
+                    data-question="What are the room prices?">
+                Room Prices
+            </button>
+
+            <button type="button" class="quick-question"
+                    data-question="What is the check-in time?">
+                Check-in Time
+            </button>
+
+            <button type="button" class="quick-question"
+                    data-question="What is the check-out time?">
+                Check-out Time
+            </button>
+
+            <button type="button" class="quick-question"
+                    data-question="Which room is best for a family?">
+                Family Room
+            </button>
+
+            <button type="button" class="quick-question"
+                    data-question="Do rooms have Wi-Fi and breakfast?">
+                Wi-Fi &amp; Breakfast
+            </button>
+
+            <button type="button" class="quick-question"
+                    data-question="How can I cancel or modify my booking?">
+                Booking Help
+            </button>
+
+            <button type="button" class="quick-question"
+                    data-question="What services are available for guests?">
+                Guest Services
+            </button>
+
+            <button type="button" class="quick-question"
+                    data-question="Recommend a room within my budget">
+                Room Recommendation
+            </button>
+
+            <button type="button" class="quick-question"
+                    data-question="How do I book a room?">
+                How to Book
+            </button>
+
+            <button type="button" class="quick-question"
+                    data-question="Compare all available rooms">
+                Compare Rooms
+            </button>
+        </div>
+
+        <form id="chatForm" class="chat-input-area">
+            <input id="chatInput" type="text"
+                   placeholder="Type your question..."
+                   maxlength="500" required>
+
+            <button type="submit" class="send-button">
+                Send
+            </button>
+        </form>
+
+    </div>
+</section>
+
+<!-- STAGE 4: GUEST SERVICE -->
+
+<section id="service" class="section">
+
+    <div class="section-heading">
+        <p class="eyebrow">STAGE 4</p>
+        <h2>Guest Services</h2>
+        <p>Submit a service request to hotel management.</p>
+    </div>
+
+    <div class="service-grid" aria-label="Available guest services">
+        <article class="service-card">
+            <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80"
+                 alt="Hotel room cleaning service">
+            <div class="service-card-content">
+                <h3>Room Cleaning</h3>
+                <p>Keep your room fresh, clean and comfortable.</p>
+            </div>
+        </article>
+
+        <article class="service-card">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80"
+                 alt="Hotel food service">
+            <div class="service-card-content">
+                <h3>Food Service</h3>
+                <p>Request meals and room dining from our hotel team.</p>
+            </div>
+        </article>
+
+        <article class="service-card">
+            <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=900&q=80"
+                 alt="Hotel maintenance technician">
+            <div class="service-card-content">
+                <h3>Maintenance</h3>
+                <p>Report room repairs and maintenance requirements.</p>
+            </div>
+        </article>
+
+        <article class="service-card">
+            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=900&q=80"
+                 alt="Guest receiving hotel assistance">
+            <div class="service-card-content">
+                <h3>Other Assistance</h3>
+                <p>Ask our team for any additional guest support.</p>
+            </div>
+        </article>
+
+        <article class="service-card">
+            <img src="https://images.unsplash.com/photo-1545173168-9f1947eebb7f?auto=format&fit=crop&w=900&q=80"
+                 alt="Hotel laundry service">
+            <div class="service-card-content">
+                <h3>Laundry</h3>
+                <p>Get washing, ironing and dry-cleaning support.</p>
+            </div>
+        </article>
+
+        <article class="service-card">
+            <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80"
+                 alt="Airport pickup service">
+            <div class="service-card-content">
+                <h3>Airport Pickup</h3>
+                <p>Arrange a comfortable pickup from the airport.</p>
+            </div>
+        </article>
+
+        <article class="service-card">
+            <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=900&q=80"
+                 alt="Hotel travel and cab assistance">
+            <div class="service-card-content">
+                <h3>Travel Assistance</h3>
+                <p>Arrange local transport, cab bookings and travel guidance.</p>
+            </div>
+        </article>
+
+        <article class="service-card">
+            <img src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=900&q=80"
+                 alt="Early morning wake-up alarm clock">
+            <div class="service-card-content">
+                <h3>Wake-up Call</h3>
+                <p>Schedule a wake-up call for your travel plans.</p>
+            </div>
+        </article>
+
+        <article class="service-card">
+            <img src="https://images.unsplash.com/photo-1556742111-a301076d9d18?auto=format&fit=crop&w=900&q=80"
+                 alt="Hotel luggage support">
+            <div class="service-card-content">
+                <h3>Luggage Assistance</h3>
+                <p>Request help with bags, storage and transportation.</p>
+            </div>
+        </article>
+    </div>
+
+    <form id="serviceForm" class="main-form">
+
+        <label for="serviceName">Guest Name</label>
+        <input type="text" id="serviceName"
+               maxlength="100" required>
+
+        <label for="roomNumber">Room Number</label>
+        <input type="text" id="roomNumber"
+               maxlength="20" required>
+
+        <label for="requestType">Service Type</label>
+
+        <select id="requestType" required>
+            <option value="">Select Service</option>
+            <option value="Room Cleaning">Room Cleaning</option>
+            <option value="Food">Food Service</option>
+            <option value="Maintenance">Maintenance</option>
+            <option value="Laundry">Laundry</option>
+            <option value="Airport Pickup">Airport Pickup</option>
+            <option value="Travel Assistance">Travel Assistance</option>
+            <option value="Wake-up Call">Wake-up Call</option>
+            <option value="Luggage Assistance">Luggage Assistance</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <label for="serviceDetails">Request Details</label>
+        <textarea id="serviceDetails"
+                  maxlength="500" required></textarea>
+
+        <button type="submit" class="primary-button">
+            Submit Request
+        </button>
+
+        <p id="serviceStatus" class="status-message"
+           aria-live="polite"></p>
+
+    </form>
+</section>
+
+</main>
+
+<footer>
+    <a href="/" class="brand">SmartStay <span>AI</span></a>
+    <p>Smart Hotel Management System | Student Project</p>
+</footer>
+
+</body>
+</html>
