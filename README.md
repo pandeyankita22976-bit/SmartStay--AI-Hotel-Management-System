@@ -5,7 +5,7 @@ SmartStay AI is a web-based hotel management system designed to make hotel opera
 
  🌐 Live Demo
 
-[Click Here to Visit SmartStay AI](YOUR_LIVE_WEBSITE_LINK)
+https://smartstay-ai-hotel-management-system.onrender.com
 
  ✨ Features
 
