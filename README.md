@@ -35,7 +35,7 @@ https://smartstay-ai-hotel-management-system.onrender.com
 - SQLite – Database Management
 
 📂 Project Structure
-
+'''
 SmartStay-AI
 │
 ├── app.py
@@ -51,7 +51,7 @@ SmartStay-AI
 ├── hotel.db
 │
 └── requirements.txt
-
+'''
 📌 Project Modules
  1. User Module
 Allows users to explore rooms and interact with hotel services.
