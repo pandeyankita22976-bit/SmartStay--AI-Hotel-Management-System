@@ -35,6 +35,7 @@ https://smartstay-ai-hotel-management-system.onrender.com
 - SQLite – Database Management
 
 📂 **Project Structure**
+
 '''text
 SmartStay-AI/
 ├── app.py
