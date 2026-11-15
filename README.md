@@ -36,7 +36,7 @@ https://smartstay-ai-hotel-management-system.onrender.com
 
 📂 Project Structure
 
-SmartStay-AI/
+SmartStay-AI
 │
 ├── app.py
 │
