@@ -34,21 +34,17 @@ https://smartstay-ai-hotel-management-system.onrender.com
 - Flask – Web Framework
 - SQLite – Database Management
 
-📂 Project Structure
+📂 **Project Structure**
 '''text
 SmartStay-AI/
 ├── app.py
-│
 ├── templates/
 │   ├── index.html
 │   └── admin.html
-│
 ├── static/
 │   ├── style.css
 │   └── script.js
-│
 ├── hotel.db
-│
 └── requirements.txt
 '''
 📌 Project Modules
