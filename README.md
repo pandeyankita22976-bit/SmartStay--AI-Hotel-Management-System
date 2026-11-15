@@ -47,6 +47,7 @@ SmartStay-AI/
 ├── hotel.db
 └── requirements.txt
 '''
+
 📌 Project Modules
  1. User Module
 Allows users to explore rooms and interact with hotel services.
